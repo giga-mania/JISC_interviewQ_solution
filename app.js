@@ -20,15 +20,4 @@ app.use(express.json())
 app.use("/api", routes.authRoute)
 
 
-app.get("/api/allAccess", (req, res) => {
-    res.status(200).send("public access")
-})
-
-app.get("/api/userAccess", require("./middleware").verifyToken, (req, res) => {
-    res.status(200).send("user access")
-})
-
-
-
-
 module.exports = app
