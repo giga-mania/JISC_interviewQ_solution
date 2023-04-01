@@ -1,6 +1,7 @@
-const {login, register} = require("./auth.controller")
+const {login, register, refresh} = require("./auth.controller")
 
 module.exports = {
     register,
-    login
+    login,
+    refresh
 }
