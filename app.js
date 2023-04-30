@@ -18,6 +18,9 @@ app.use(express.json())
 
 
 app.use("/api", routes.authRoute)
+app.get("/api/questions", (req, res) => {
+    res.status(200).json(require("./data/questions"))
+})
 
 
 module.exports = app
