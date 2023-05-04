@@ -12,7 +12,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     const formSubmitHandler = async (formData) => {
-        const response = await fetch('http://localhost:8080/api/login', {
+        const response = await fetch('http://localhost:8000/api/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -21,8 +21,8 @@ const Login = () => {
         })
         const userData = await response.json()
         if(response.ok) {
-            authContext.setAuthUser(JSON.stringify(userData))
-            navigate("../profile", {replace: true})
+            authContext.setAuthUser(userData)
+            navigate("../results", {replace: true})
         }
     }
 

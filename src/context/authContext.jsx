@@ -1,20 +1,33 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
 const initialState = {
     user: localStorage.getItem("user"),
-    setAuthUser: () => {},
-    logOut: () => {}
+    setAuthUser: () => {
+    },
+    logOut: () => {
+    }
 }
 const AuthContext = React.createContext(initialState)
 AuthContext.displayName = "AuthContext"
 
 const AuthContextProvider = ({children}) => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState("")
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"))
+        if (user) {
+            setAuthUser(user)
+            navigate("/answer-questions")
+        }
+    }, [])
+
 
     const setAuthUser = (user) => {
-        setUser(JSON.parse(user))
-        localStorage.setItem("user", user)
+        setUser(user)
+        localStorage.setItem("user", JSON.stringify(user))
     }
 
     const logOut = () => {

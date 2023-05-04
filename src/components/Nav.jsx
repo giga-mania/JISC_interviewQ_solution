@@ -2,14 +2,13 @@ import {useContext} from 'react';
 import {NavLink} from "react-router-dom";
 import {AuthContext} from "../context/authContext.jsx";
 
-const Nav = () => {
+const Nav = ({user}) => {
     const {logOut} = useContext(AuthContext)
-
     return (
         <div css={{
             width: "100%",
             height: "60px",
-            border: "1px solid gray",
+            border: "1px solid green",
             display: "flex",
             justifyContent: "space-around",
             paddingTop: "10px",
@@ -17,10 +16,11 @@ const Nav = () => {
                 height: "30px"
             }
         }}>
-            <NavLink to="profile/results">Questions</NavLink>
+            <NavLink to="/results">Results</NavLink>
             <br/>
             <br/>
-            <NavLink to="profile/answer">Answer</NavLink>
+            <NavLink to="answer-questions">Reset Submission</NavLink>
+            <h1>{user?.username}</h1>
             <button onClick={logOut}>LogOut</button>
         </div>
     );

@@ -1,16 +1,17 @@
-import {useContext, useEffect} from "react";
-import {Navigate, Outlet, Route, Routes, useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {Navigate, Outlet, Route, Routes} from "react-router-dom";
 
-import {AuthContext, AuthContextProvider} from "./context/authContext.jsx";
+import {AuthContext} from "./context/authContext.jsx";
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
-import Profile from "./pages/Profile.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
+import Survey from "./pages/Survey.jsx";
+import Results from "./pages/Results.jsx";
 import Layout from "./components/Layout.jsx";
 import Nav from "./components/Nav.jsx";
 
 
-const ProtectedRoute = ({user, redirectPath = "/login", children}) => {
+const ProtectedRoute = ({user = {}, redirectPath = "/login", children}) => {
+
     if (!user) {
         return <Navigate to={redirectPath} replace/>
     }
@@ -20,35 +21,25 @@ const ProtectedRoute = ({user, redirectPath = "/login", children}) => {
 
 
 function App() {
-    const {user, logOut} = useContext(AuthContext)
-    const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     if (user) {
-    //         navigate("/profile")
-    //     }
-    // }, [user])
-
+    const {user, logOut, setAuthUser} = useContext(AuthContext)
 
     return (
-        <AuthContextProvider>
-            <Routes>
-                <Route path='signup' element={<Signup/>}/>
-                <Route path='login' element={<Login/>}/>
-                <Route element={<ProtectedRoute redirectPath={"/login"} user={user}/>}>
-                    <Route element=
-                               {
-                                   <Layout>
-                                       <Nav/>
-                                   </Layout>
-                               }>
-                        <Route path="profile" element={<Profile/>}/>
-                        <Route path="dashboard" element={<Dashboard/>}/>
-                    </Route>
+        <Routes>
+            <Route path='signup' element={<Signup/>}/>
+            <Route path='login' element={<Login/>}/>
+            <Route element={<ProtectedRoute redirectPath={"/login"} user={user}/>}>
+                <Route element=
+                           {
+                               <Layout>
+                                   <Nav user={user}/>
+                               </Layout>
+                           }>
+                    <Route path="answer-questions" element={<Survey user={user}/>}/>
+                    <Route path="results" element={<Results/>}/>
                 </Route>
-                <Route path='*' element={<h1>Page not found!</h1>}/>
-            </Routes>
-        </AuthContextProvider>
+            </Route>
+            <Route path='*' element={<h1>Page not found!</h1>}/>
+        </Routes>
     )
 }
 

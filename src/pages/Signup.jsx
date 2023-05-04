@@ -10,7 +10,7 @@ const Signup = () => {
     const {handleSubmit, register} = useForm()
 
     const formSubmitHandler = async (formData) => {
-        const response = await fetch('http://localhost:8080/api/register', {
+        const response = await fetch('http://localhost:8000/api/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -20,7 +20,7 @@ const Signup = () => {
         const userData = await response.json()
 
         if(response.ok) {
-            const response = await fetch('http://localhost:8080/api/login', {
+            const response = await fetch('http://localhost:8000/api/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
