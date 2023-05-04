@@ -4,7 +4,6 @@ const User = db.user
 
 
 exports.register = async (req, res) => {
-    console.log("reached")
     try {
 
         const hashedPassword = await hashPassword(req.body.password)
@@ -66,10 +65,6 @@ exports.login = async (req, res) => {
     }
 }
 
-
-exports.refresh = async (req, res) => {
-
-}
 
 
 
