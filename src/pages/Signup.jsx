@@ -1,13 +1,14 @@
 import {useContext} from "react";
 import {FormGroup, Input} from "../components/lib.jsx"
 import {useForm} from "react-hook-form";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import {AuthContext} from "../context/authContext.jsx";
 
 const Signup = () => {
     const authContext = useContext(AuthContext)
     const {handleSubmit, register} = useForm()
+    const navigate = useNavigate()
 
     const formSubmitHandler = async (formData) => {
         const response = await fetch('http://localhost:8000/api/register', {
@@ -17,19 +18,20 @@ const Signup = () => {
             },
             body: JSON.stringify(formData)
         })
-        const userData = await response.json()
-
+        const newUser = await response.json()
         if(response.ok) {
+            console.log("that was okay")
             const response = await fetch('http://localhost:8000/api/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(userData)
+                body: JSON.stringify({...newUser, password: formData.password})
             })
             const userData = await response.json()
             if(response.ok) {
                 authContext.setAuthUser(userData)
+                navigate("../results", {replace: true})
             }
         }
     }

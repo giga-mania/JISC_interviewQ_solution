@@ -12,6 +12,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     const formSubmitHandler = async (formData) => {
+        console.log(formData)
         const response = await fetch('http://localhost:8000/api/login', {
             method: "POST",
             headers: {

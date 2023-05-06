@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 const Survey = ({user}) => {
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState([])
+    const [onSubmitSuccess, setOnSubmitSuccess] = useState(false)
 
     useEffect(() => {
         try {
@@ -38,8 +39,10 @@ const Survey = ({user}) => {
             },
             body: JSON.stringify({userAnswers: answers, userId: user.id})
         })
-        return await response.json()
 
+        if (response.ok) {
+            setOnSubmitSuccess(true)
+        }
     }
 
 
@@ -64,35 +67,42 @@ const Survey = ({user}) => {
                 }
             }
         }}>
-            <h1>Answer the question to find a trainer best fits to you!</h1>
-            <h3>Smile! Relax! Don't rush! Feel the tempo and everything 'll come to the bright.</h3>
-            <ul>
-                {
-                    questions?.map(({question, id}) => (
-                        <li key={id} css={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        }}>
-                            <p>{question}</p>
-                            <div>
-                                <label htmlFor={`${id}-yes`}>
-                                    Yes
-                                    <input type="radio" name={id} id={`${id}-yes`} onChange={handleInputChange}/>
-                                </label>
-                                <br/>
-                                <label htmlFor={`${id}-no`}>
-                                    No
-                                    <input type="radio" name={id} id={`${id}-no`} onChange={handleInputChange}/>
-                                </label>
-                            </div>
-                        </li>
-                    ))
-                }
-            </ul>
-            <br/>
-            <br/>
-            <button onClick={submitHandler}>Submit</button>
+            {
+                onSubmitSuccess ? <div>Submitted Successfully</div> :
+                    <>
+                        <h1>Answer the question to find a trainer best fits to you!</h1>
+                        <h3>Smile! Relax! Don't rush! Feel the tempo and everything 'll come to the bright.</h3>
+                        <ul>
+                            {
+                                questions?.map(({question, id}) => (
+                                    <li key={id} css={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                    }}>
+                                        <p>{question}</p>
+                                        <div>
+                                            <label htmlFor={`${id}-yes`}>
+                                                Yes
+                                                <input type="radio" name={id} id={`${id}-yes`}
+                                                       onChange={handleInputChange}/>
+                                            </label>
+                                            <br/>
+                                            <label htmlFor={`${id}-no`}>
+                                                No
+                                                <input type="radio" name={id} id={`${id}-no`}
+                                                       onChange={handleInputChange}/>
+                                            </label>
+                                        </div>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                        <br/>
+                        <br/>
+                        <button onClick={submitHandler}>Submit</button>
+                    </>
+            }
         </div>
     );
 };

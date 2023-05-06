@@ -19,7 +19,10 @@ const Nav = ({user}) => {
             <NavLink to="/results">Results</NavLink>
             <br/>
             <br/>
-            <NavLink to="answer-questions">Reset Submission</NavLink>
+            <NavLink to="answer-questions">{user?.hasAnswered ? "Reset Submission" : "Answer questions"}</NavLink>
+            {
+                user?.isAdmin &&  <NavLink to="add-trainer">Add trainer</NavLink>
+            }
             <h1>{user?.username}</h1>
             <button onClick={logOut}>LogOut</button>
         </div>

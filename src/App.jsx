@@ -6,18 +6,17 @@ import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
 import Survey from "./pages/Survey.jsx";
 import Results from "./pages/Results.jsx";
+import Admin from "./pages/Admin.jsx";
 import Layout from "./components/Layout.jsx";
 import Nav from "./components/Nav.jsx";
 
 
 const ProtectedRoute = ({user = {}, redirectPath = "/login", children}) => {
-
-    if (!user) {
-        return <Navigate to={redirectPath} replace/>
-    }
+    if (!user) return <Navigate to={redirectPath} replace/>
 
     return children ? children : <Outlet/>
 }
+
 
 
 function App() {
@@ -35,7 +34,10 @@ function App() {
                                </Layout>
                            }>
                     <Route path="answer-questions" element={<Survey user={user}/>}/>
-                    <Route path="results" element={<Results/>}/>
+                    <Route path="results" element={<Results user={user}/>}/>
+                    {
+                        user?.isAdmin && <Route path="add-trainer" element={<Admin/>}/>
+                    }
                 </Route>
             </Route>
             <Route path='*' element={<h1>Page not found!</h1>}/>
