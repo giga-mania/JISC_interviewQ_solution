@@ -18,6 +18,12 @@ module.exports = (sequelize, Sequelize) => {
         password: {
             type: Sequelize.STRING,
             allowNull: null
+        },
+        hasAnswered: {
+            type: Sequelize.BOOLEAN
+        },
+        isAdmin: {
+            type: Sequelize.BOOLEAN
         }
     }, {
         timestamps: false
