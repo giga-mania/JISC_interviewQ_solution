@@ -5,7 +5,6 @@ const User = db.user
 
 exports.register = async (req, res) => {
     try {
-
         const hashedPassword = await hashPassword(req.body.password)
         console.log(hashedPassword)
         const userData = {
@@ -42,15 +41,10 @@ exports.login = async (req, res) => {
 
     try {
         const user = await User.findOne({where: {username: req.body.username}})
-        if (!user) {
-            return res.status(403).json({message: "Wrong username or password!"})
-        }
+        if (!user) return res.status(403).json({message: "Wrong username or password!"})
 
         let passwordIsValid = await verifyPassword(req.body.password, user.password)
-
-        if (!passwordIsValid) {
-            return res.status(401).json({message: "Wrong username or password!"})
-        }
+        if (!passwordIsValid) return res.status(401).json({message: "Wrong username or password!"})
 
         let token = createToken(user)
 
