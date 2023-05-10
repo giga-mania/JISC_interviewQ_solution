@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
-const Results = ({user}) => {
+const Ratings = ({user}) => {
     const [results, setResults] = useState([])
     console.log(results)
 
     useEffect(() => {
         (async function fetchResults() {
             try {
-                const res = await fetch(`http://localhost:8000/api/results/?userid=${user.id}`)
+                const res = await fetch(`http://localhost:8000/api/ratings/?userid=${user.id}`)
                 const data = await res.json()
-                console.log("___", data)
                 setResults(data)
             } catch (err) {
                 console.log(err)
@@ -27,7 +26,7 @@ const Results = ({user}) => {
                         <ul>
                             {
                                 results.map((res) => (
-                                    <li>
+                                    <li key={res.trainerId}>
                                         <h3>Trainer: #{res.trainerId} -- Match {(100 * res.point) / 10}%</h3>
                                     </li>
                                 ))
@@ -43,4 +42,4 @@ const Results = ({user}) => {
     );
 };
 
-export default Results;
+export default Ratings;
