@@ -25,8 +25,5 @@ db.user.belongsToMany(db.question, {through: db.userAnswer})
 db.question.belongsToMany(db.user, {through: db.userAnswer})
 
 
-// sequelize.sync({alter: true})
-//     .then(() => {})
-//     .catch(console.log)
 
 module.exports = db

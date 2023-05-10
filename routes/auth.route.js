@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const {checkDuplicateUsernameOrEmail} = require("../middleware")
-const {register, login, refresh} = require("../controllers");
+const {register, login} = require("../controllers");
 
 
 router.post("/register", checkDuplicateUsernameOrEmail, register)

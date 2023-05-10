@@ -3,7 +3,6 @@ const User = db.user
 
 
 exports.checkDuplicateUsernameOrEmail = async (req, res, next) => {
-    console.log(req.body)
     const username = await User.findOne({where: {username: req.body.username}})
     if (username) {
         return res.status(400).send({
