@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  api:
+    build: ./
+    container_name: jisc_api
+    volumes:
+      - ./:/app/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  client:
+    build: ./client/
+    entrypoint: ["nginx", "-g", "daemon off;"]
+    container_name: jisc_client
+    volumes:
+      - ./client:/app/
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    container_name: jisc_postgres_db
+    ports:
+      - "5432:5432"
