@@ -1,7 +1,8 @@
-import {useContext} from "react";
+import {useContext, ReactElement} from "react";
 import {Navigate, Outlet, Route, Routes} from "react-router-dom";
 
 import {AuthContext} from "./context/authContext.jsx";
+import {User} from "./context/authContext.jsx";
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
 import Survey from "./pages/Survey.jsx";
@@ -11,16 +12,22 @@ import Layout from "./components/Layout.jsx";
 import Nav from "./components/Nav.jsx";
 
 
-const ProtectedRoute = ({user = {}, redirectPath = "/login", children}) => {
+type ProtectedRouteProps = {
+    user: User | null,
+    redirectPath?: string,
+    children?: ReactElement
+}
+
+
+const ProtectedRoute = ({user, redirectPath = "/login", children}: ProtectedRouteProps) => {
     if (!user) return <Navigate to={redirectPath} replace/>
 
     return children ? children : <Outlet/>
 }
 
 
-
 function App() {
-    const {user, logOut, setAuthUser} = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
 
     return (
         <Routes>
