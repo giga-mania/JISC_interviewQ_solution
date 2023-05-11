@@ -1,6 +1,6 @@
 import {useContext} from "react";
 import {FormGroup, Input} from "../components/lib.jsx"
-import {useForm} from "react-hook-form";
+import {useForm, FieldValues} from "react-hook-form";
 import {Link, useNavigate} from "react-router-dom";
 
 import {AuthContext} from "../context/authContext.jsx";
@@ -10,7 +10,7 @@ const Signup = () => {
     const {handleSubmit, register} = useForm()
     const navigate = useNavigate()
 
-    const formSubmitHandler = async (formData) => {
+    const formSubmitHandler = async (formData: FieldValues) => {
         const response = await fetch('http://localhost:8000/api/register', {
             method: "POST",
             headers: {
@@ -58,15 +58,15 @@ const Signup = () => {
             }}>
                 <FormGroup>
                     <label htmlFor="username">username</label>
-                    <Input name="username" id="username" type="text" {...register("username", {required: true})}/>
+                    <Input id="username" type="text" {...register("username", {required: true})}/>
                 </FormGroup>
                 <FormGroup>
                     <label htmlFor="email">email</label>
-                    <Input name="email" id="email" type="email" {...register("email", {required: true})}/>
+                    <Input id="email" type="email" {...register("email", {required: true})}/>
                 </FormGroup>
                 <FormGroup>
                     <label htmlFor="password">password</label>
-                    <Input name="password" id="password" type="password" {...register("password", {required: true})}/>
+                    <Input id="password" type="password" {...register("password", {required: true})}/>
                 </FormGroup>
                 <div css={{
                     display: "flex",

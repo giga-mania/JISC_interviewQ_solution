@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 
-type User = {
+export type User = {
     id: number,
     username: string,
     email: string,
@@ -43,7 +43,7 @@ const AuthContextProvider = ({children}: AuthContextProviderProps) => {
             navigate("/answer-questions")
         }
     }, [])
-    
+
     const setAuthUser = (user: User) => {
         setUser(user)
         localStorage.setItem("user", JSON.stringify(user))

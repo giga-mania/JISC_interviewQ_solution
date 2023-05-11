@@ -1,7 +1,11 @@
-import React from 'react';
+import {ReactElement} from 'react';
 import {Outlet} from "react-router-dom";
 
-const Layout = ({children}) => {
+type LayoutProps = {
+    children: ReactElement
+}
+
+const Layout = ({children}: LayoutProps) => {
     return (
         <div>
             {children}

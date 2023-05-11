@@ -1,8 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState, ChangeEvent} from 'react';
+import {User} from "../context/authContext";
 
-const Survey = ({user}) => {
+type SurveyProps = {
+    user: User | null
+}
+
+type Answer = {
+    question: string,
+    answer: boolean
+}
+
+
+const Survey = ({user}: SurveyProps) => {
     const [questions, setQuestions] = useState([])
-    const [answers, setAnswers] = useState([])
+    const [answers, setAnswers] = useState<Answer[]>([])
     const [onSubmitSuccess, setOnSubmitSuccess] = useState(false)
 
     useEffect(() => {
@@ -18,7 +29,7 @@ const Survey = ({user}) => {
     }, [])
 
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const current = {question: e.target.name, answer: e.target.id.split("-")[1] === "yes"}
         const isAlready = answers.find((answer) => answer.question === e.target.name)
         if (isAlready) {
@@ -37,7 +48,7 @@ const Survey = ({user}) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({userAnswers: answers, userId: user.id})
+            body: JSON.stringify({userAnswers: answers, userId: user?.id})
         })
 
         if (response.ok) {

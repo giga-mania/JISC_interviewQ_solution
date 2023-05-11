@@ -1,11 +1,16 @@
 // noinspection DuplicatedCode
+import {useEffect, useState, ChangeEvent} from 'react';
 
-import React, {useEffect, useState} from 'react';
+type Answer = {
+    question: string,
+    answer: boolean
+}
+
 
 const Admin = () => {
     const [trainerName, setTrainerName] = useState("")
     const [questions, setQuestions] = useState([])
-    const [answers, setAnswers] = useState([])
+    const [answers, setAnswers] = useState<Answer[]>([])
     const [onSubmitSuccess, setOnSubmitSuccess] = useState(false)
 
     useEffect(() => {
@@ -20,7 +25,7 @@ const Admin = () => {
         }
     }, [])
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const current = {question: e.target.name, answer: e.target.id.split("-")[1] === "yes"}
         const isAlready = answers.find((answer) => answer.question === e.target.name)
         if (isAlready) {

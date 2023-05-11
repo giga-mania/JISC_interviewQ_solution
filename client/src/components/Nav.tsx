@@ -1,8 +1,15 @@
 import {useContext} from 'react';
 import {NavLink} from "react-router-dom";
 import {AuthContext} from "../context/authContext.jsx";
+import {User} from "../context/authContext.jsx";
 
-const Nav = ({user}) => {
+
+type NavProps = {
+    user: User | null
+}
+
+
+const Nav = ({user}: NavProps) => {
     const {logOut} = useContext(AuthContext)
     return (
         <div css={{
