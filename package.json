@@ -16,7 +16,7 @@
   "main": "index.js",
   "scripts": {
     "install-server": "npm install",
-    "install-client":"cd client && npm install",
+    "install-client": "cd client && npm install",
     "start-server": "nodemon index.js",
     "start-client": "cd client && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"

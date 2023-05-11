@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const config = require("../config/auth.config")
 
 const createToken = (user) => {
     if (!user) {
@@ -13,7 +14,7 @@ const createToken = (user) => {
             iss: 'api.jisc',
             aud: 'api.jisc'
         },
-        process.env.JWT_SECRET,
+        config.privateKey,
         {algorithm: "HS256", expiresIn: "1h"}
     )
 }
